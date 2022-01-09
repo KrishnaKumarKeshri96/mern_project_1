@@ -30,7 +30,7 @@ const productSchema = new mongoose.Schema({
       },
     },
   ],
-  catergory: {
+  category: {
     type: String,
     required: [true, "price Enter Product Catergory"],
   },
@@ -38,6 +38,7 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: [true, "price Enter Product Stock"],
     maxLength: [4, "price cannot exceed 9999"],
+    default: 1,
   },
   numOfReview: {
     type: Number,
