@@ -1,4 +1,5 @@
 import productScema from "../Models/productsModel.js";
+import { ErrorHandler } from "../utils/errorHandler.js";
 
 //get request
 const getAllProducts = async (req, res) => {
@@ -32,12 +33,10 @@ const updateProducts = async (req, res, next) => {
 };
 
 //get one product
-const getProductOne = async (req, res) => {
+const getProductOne = async (req, res, next) => {
   let products = await productScema.findById(req.params.id);
   if (!products) {
-    return res
-      .status(500)
-      .json({ success: false, message: "Product Not Found" });
+    return next(new ErrorHandler("Product not found", 404));
   }
   return res.status(200).json({ success: true, products });
 };
