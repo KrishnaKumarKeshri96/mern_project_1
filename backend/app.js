@@ -2,6 +2,14 @@ import { app } from "./server.js";
 import dotenv from "dotenv";
 import { database } from "./configs/db.js";
 
+//Handling Uncaught exceptions
+
+process.on("uncaughtException", (err) => {
+  console.log("Error:", err.message);
+  console.log("Shutting Down Server due  to uncaught exception");
+  process.exit(1);
+});
+
 dotenv.config({ path: "configs/config.env" });
 
 const server = app.listen(process.env.PORT, () => {
