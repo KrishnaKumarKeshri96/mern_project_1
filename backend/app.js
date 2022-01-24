@@ -4,7 +4,17 @@ import { database } from "./configs/db.js";
 
 dotenv.config({ path: "configs/config.env" });
 
-app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT, () => {
   database();
   console.log(`listening on port ${process.env.PORT}`);
+});
+
+//Unhandled Promise Rejection
+
+process.on("unhandledRejection", (error) => {
+  console.log("Error:", error.message);
+  console.log("Shutting Down server due to unhandled Promise rejection");
+  server.close(() => {
+    process.exit(1);
+  });
 });

@@ -10,8 +10,5 @@ export const database = () => {
     })
     .then((success) => {
       console.log("db runnig on " + success.connection.host);
-    })
-    .catch((err) => {
-      console.log(err);
     });
 };
