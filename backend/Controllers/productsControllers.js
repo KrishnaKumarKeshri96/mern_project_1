@@ -20,9 +20,7 @@ const addProducts = async (req, res) => {
 const updateProducts = async (req, res, next) => {
   let products = await productScema.findById(req.params.id);
   if (!products) {
-    return res
-      .status(500)
-      .json({ success: false, message: "Product Not Found" });
+    return next(new ErrorHandler("Product not found", 404));
   }
   products = await productScema.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
@@ -43,9 +41,7 @@ const getProductOne = async (req, res, next) => {
 const deleteProducts = async (req, res) => {
   let products = await productScema.findById(req.params.id);
   if (!products) {
-    return res
-      .status(500)
-      .json({ success: false, message: "Product Not Found" });
+    return next(new ErrorHandler("Product not found", 404));
   }
   products.remove();
 
