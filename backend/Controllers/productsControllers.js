@@ -6,9 +6,11 @@ import AsyncErrorHandler from "../utils/asyncError.js";
 
 //get request
 const getAllProducts = AsyncErrorHandler(async (req, res) => {
+  const productCount = await productScema.countDocuments();
   const apiFeatures = new ApiFeatures(productScema, req.query)
     .search()
-    .filter();
+    .filter()
+    .pagingation(5);
 
   res.status(200).json({ success: true, products: await apiFeatures.query });
 });
@@ -19,6 +21,7 @@ const addProducts = AsyncErrorHandler(async (req, res) => {
   return res.status(201).json({
     success: true,
     products,
+    productCount,
   });
 });
 

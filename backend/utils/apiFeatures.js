@@ -35,8 +35,15 @@ export class ApiFeatures {
     changingQueryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
 
     this.query = this.query.find(JSON.parse(changingQueryStr));
-    console.log("changingQueryStr:", changingQueryStr);
 
+    return this;
+  }
+
+  pagingation(limit) {
+    const currentPage = Number(this.query.page) || 1;
+
+    const skip = limit * (currentPage - 1);
+    this.query = this.query.limit(limit).skip(skip);
     return this;
   }
 }
