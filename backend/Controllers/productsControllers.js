@@ -1,11 +1,14 @@
 import productScema from "../Models/productsModel.js";
 import { ErrorHandler } from "../utils/errorHandler.js";
+import { ApiFeatures } from "../utils/apiFeatures.js";
 
 import AsyncErrorHandler from "../utils/asyncError.js";
 
 //get request
 const getAllProducts = AsyncErrorHandler(async (req, res) => {
-  res.status(200).json({ success: true, products: await productScema.find() });
+  const apiFeatures = new ApiFeatures(productScema, req.query).search();
+
+  res.status(200).json({ success: true, products: await apiFeatures.query });
 });
 
 //Post request --admin
