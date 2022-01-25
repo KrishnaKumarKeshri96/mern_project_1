@@ -6,7 +6,9 @@ import AsyncErrorHandler from "../utils/asyncError.js";
 
 //get request
 const getAllProducts = AsyncErrorHandler(async (req, res) => {
-  const apiFeatures = new ApiFeatures(productScema, req.query).search();
+  const apiFeatures = new ApiFeatures(productScema, req.query)
+    .search()
+    .filter();
 
   res.status(200).json({ success: true, products: await apiFeatures.query });
 });
