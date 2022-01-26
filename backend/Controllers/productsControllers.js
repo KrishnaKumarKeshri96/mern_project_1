@@ -1,6 +1,6 @@
 import productScema from "../Models/productsModel.js";
-import { ErrorHandler } from "../utils/errorHandler.js";
 import { ApiFeatures } from "../utils/apiFeatures.js";
+import { ErrorHandler } from "../utils/errorHandler.js";
 
 import AsyncErrorHandler from "../utils/asyncError.js";
 
