@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -37,5 +39,25 @@ const userSchema = new mongoose.Schema({
   resetPassword: String,
   resetPasswordExpire: Date,
 });
+//Check If Password is Modified or Not Modified & hash the password
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+
+  this.password = await bcrypt.hash(this.password, 10);
+});
+
+//JWT token
+
+userSchema.methods.getJWTToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_TOKEN, {
+    expiresIn: process.env.JWT_EXPIRE,
+  });
+};
+//Checking password is correct or not
+userSchema.methods.comparePassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
 export default mongoose.model("User", userSchema);

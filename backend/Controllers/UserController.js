@@ -10,5 +10,6 @@ export const registration = AsyncErrorHandler(async (req, res, next) => {
     ...req.body,
     avatar: { public_id: "test", url: "test" },
   });
-  return res.status(201).json({ success: true, user });
+  const token = user.getJWTToken();
+  return res.status(201).json({ success: true, token });
 });
