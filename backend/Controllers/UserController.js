@@ -5,7 +5,7 @@ import userSchema from "../Models/userModels.js";
 
 //Register a User
 
-const registration = AsyncErrorHandler((req, res, next) => {
+export const registration = AsyncErrorHandler(async (req, res, next) => {
   const user = await userSchema.create({
     ...req.body,
     avatar: { public_id: "test", url: "test" },
