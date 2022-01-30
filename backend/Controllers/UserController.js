@@ -3,6 +3,8 @@ import { ErrorHandler } from "../utils/errorHandler.js";
 import AsyncErrorHandler from "../utils/asyncError.js";
 import userSchema from "../Models/userModels.js";
 
+import { saveToken } from "../utils/jwtToken.js";
+
 //Register a User
 
 export const registration = AsyncErrorHandler(async (req, res, next) => {
@@ -10,8 +12,7 @@ export const registration = AsyncErrorHandler(async (req, res, next) => {
     ...req.body,
     avatar: { public_id: "test", url: "test" },
   });
-  const token = user.getJWTToken();
-  return res.status(201).json({ success: true, token });
+  saveToken(user, 201, res);
 });
 
 // Login User
@@ -34,8 +35,7 @@ export const loginUser = AsyncErrorHandler(async (req, res, next) => {
   if (!matched) {
     return next(new ErrorHandler("Invalid Email or Password"), 401);
   }
-  const token = user.getJWTToken();
-  return res.status(200).json({ success: true, token });
+  saveToken(user, 200, res);
 });
 
 export const getAllUsers = AsyncErrorHandler(async (req, res, next) => {
