@@ -5,6 +5,8 @@ import userSchema from "../Models/userModels.js";
 
 import { saveToken } from "../utils/jwtToken.js";
 
+import { sendEmail } from "../utils/sendEmail.js";
+
 //Register a User
 
 export const registration = AsyncErrorHandler(async (req, res, next) => {
@@ -54,7 +56,7 @@ export const logout = AsyncErrorHandler(async (req, res, next) => {
 
 //Forgot Password
 
-export const forgotPasswords = AsyncErrorHandler(async (req, res, next) => {
+export const forgotPassword = AsyncErrorHandler(async (req, res, next) => {
   const user = await userSchema.findOne({ email: req.body.email });
 
   if (!user) return next(new ErrorHandler("User not found", 404));
@@ -68,5 +70,24 @@ export const forgotPasswords = AsyncErrorHandler(async (req, res, next) => {
     "host"
   )}/api/v1/password/reset/${resetToken}`;
 
-  const message = `Your Password Reset Token is: \n \n ${resetPasswordURL}\n If you have not requested a password reset token. Please Ignore this Mail.`;
+  const message = `Your Password Reset Token is: \n \n ${resetPasswordURL}\n\n If you have not requested a password reset token. Please Ignore this Mail.`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: `Reset Your Password`,
+      message,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: `Email Sent to ${user.email} successfully.`,
+    });
+  } catch (err) {
+    user.resetPassword = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save({ validateBeforeSave: false });
+    return next(new ErrorHandler(err.message, 500));
+  }
 });

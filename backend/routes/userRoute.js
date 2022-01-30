@@ -3,6 +3,7 @@ import {
   loginUser,
   getAllUsers,
   logout,
+  forgotPassword,
 } from "../Controllers/UserController.js";
 import express from "express";
 
@@ -12,6 +13,7 @@ router
   .post("/register", registration)
   .post("/login", loginUser)
   .get("/getAllUsers", getAllUsers)
-  .get("/logout", logout);
+  .get("/logout", logout)
+  .post("/password/reset", forgotPassword);
 
 export default router;
