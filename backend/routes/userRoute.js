@@ -5,8 +5,10 @@ import {
   logout,
   forgotPassword,
   resetPassword,
+  getCurrentUser,
 } from "../Controllers/UserController.js";
 import express from "express";
+import { isAuthenticated, AuthorizeRole } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -16,6 +18,7 @@ router
   .get("/getAllUsers", getAllUsers)
   .get("/logout", logout)
   .post("/password/reset", forgotPassword)
-  .put("/password/reset/:token", resetPassword);
+  .put("/password/reset/:token", resetPassword)
+  .get("/me", isAuthenticated, getCurrentUser);
 
 export default router;
