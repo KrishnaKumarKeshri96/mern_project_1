@@ -51,3 +51,22 @@ export const logout = AsyncErrorHandler(async (req, res, next) => {
   });
   return res.status(200).json({ success: true, message: "LoggedOut" });
 });
+
+//Forgot Password
+
+export const forgotPasswords = AsyncErrorHandler(async (req, res, next) => {
+  const user = await userSchema.findOne({ email: req.body.email });
+
+  if (!user) return next(new ErrorHandler("User not found", 404));
+
+  //get Reset password token
+
+  const resetToken = user.getTokenResetPassword();
+  await user.save({ validateBeforeSave: false });
+
+  const resetPasswordURL = `${req.protocol}://${req.get(
+    "host"
+  )}/api/v1/password/reset/${resetToken}`;
+
+  const message = `Your Password Reset Token is: \n \n ${resetPasswordURL}\n If you have not requested a password reset token. Please Ignore this Mail.`;
+});
