@@ -7,6 +7,8 @@ import { saveToken } from "../utils/jwtToken.js";
 
 import { sendEmail } from "../utils/sendEmail.js";
 
+import crypto from "crypto";
+
 //Register a User
 
 export const registration = AsyncErrorHandler(async (req, res, next) => {
@@ -90,4 +92,35 @@ export const forgotPassword = AsyncErrorHandler(async (req, res, next) => {
     await user.save({ validateBeforeSave: false });
     return next(new ErrorHandler(err.message, 500));
   }
+});
+
+export const resetPassword = AsyncErrorHandler(async (req, res, next) => {
+  //creating TokenHAsh
+  const resetPassword = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+
+  const user = await userSchema.findOne({
+    resetPassword,
+    resetPasswordExpire: { $gt: Date.now() },
+  });
+  if (!user) {
+    return next(new ErrorHandler("Requested URL is Invalid or Expired", 400));
+  }
+  if (req.body.password !== req.body.confirmPassword) {
+    return next(new ErrorHandler("Password is Not Same", 400));
+  }
+  if (req.body.confirmPassword.length <= 8) {
+    return next(
+      new ErrorHandler("Password should be greater than 8 character", 400)
+    );
+  }
+
+  user.password = req.body.confirmPassword;
+  user.resetPassword = undefined;
+  user.resetPasswordExpire = undefined;
+
+  await user.save();
+  saveToken(user, 200, res);
 });
