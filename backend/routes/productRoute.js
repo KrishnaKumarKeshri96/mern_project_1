@@ -7,11 +7,13 @@ import {
   deleteProducts,
 } from "../Controllers/productsControllers.js";
 
-import { isAuthenticated } from "../middleware/auth.js";
+import { isAuthenticated, AuthorizeRole } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.route("/products").get(isAuthenticated, getAllProducts);
+router
+  .route("/products")
+  .get(isAuthenticated, AuthorizeRole("admin"), getAllProducts);
 router.route("/products/new").post(addProducts);
 
 router

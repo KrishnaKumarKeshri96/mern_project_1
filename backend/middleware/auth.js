@@ -18,3 +18,17 @@ export const isAuthenticated = AsyncErrorHandler(async (req, res, next) => {
   req.user = await userSchema.findById(decodedData.id);
   next();
 });
+
+export const AuthorizeRole = (roles) => {
+  return (req, res, next) => {
+    if (roles == req.user.role) {
+      return next();
+    }
+    return next(
+      new ErrorHandler(
+        `Roles ${req.user.role} is not Allowed to access this`,
+        403
+      )
+    );
+  };
+};
