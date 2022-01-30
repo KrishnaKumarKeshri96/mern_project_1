@@ -3,8 +3,9 @@ import { ApiFeatures } from "../utils/apiFeatures.js";
 import { ErrorHandler } from "../utils/errorHandler.js";
 
 import AsyncErrorHandler from "../utils/asyncError.js";
-
+//
 //get request
+
 const getAllProducts = AsyncErrorHandler(async (req, res) => {
   const productCount = await productScema.countDocuments();
   const apiFeatures = new ApiFeatures(productScema, req.query)
@@ -17,6 +18,10 @@ const getAllProducts = AsyncErrorHandler(async (req, res) => {
 
 //Post request --admin
 const addProducts = AsyncErrorHandler(async (req, res) => {
+  const productCount = await productScema.countDocuments();
+  req.body.user = req.user.id;
+  // console.log(req.body);
+
   const products = await productScema.create(req.body);
   return res.status(201).json({
     success: true,
