@@ -6,7 +6,9 @@ export const saveToken = (user, statusCode, res) => {
   //Options for Cookies
   const options = {
     httpOnly: true,
-    expiresIn: Date.now() + process.env.COOKIES_EXPIRE * 24 * 60 * 60 * 1000,
+    expires: new Date(
+      Date.now() + process.env.COOKIES_EXPIRE * 24 * 60 * 60 * 1000
+    ),
   };
 
   res

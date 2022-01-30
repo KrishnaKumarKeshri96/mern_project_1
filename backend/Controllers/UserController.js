@@ -38,6 +38,16 @@ export const loginUser = AsyncErrorHandler(async (req, res, next) => {
   saveToken(user, 200, res);
 });
 
+//Get all User
 export const getAllUsers = AsyncErrorHandler(async (req, res, next) => {
   return res.status(200).json({ success: true, user: await userSchema.find() });
+});
+
+//Log Out USer User
+export const logout = AsyncErrorHandler(async (req, res, next) => {
+  res.cookie("token", null, {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+  return res.status(200).json({ success: true, message: "LoggedOut" });
 });
