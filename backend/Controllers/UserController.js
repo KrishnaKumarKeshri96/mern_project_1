@@ -123,9 +123,10 @@ export const resetPassword = AsyncErrorHandler(async (req, res, next) => {
 //Gets Current Users Detail
 
 export const getCurrentUser = AsyncErrorHandler(async (req, res, next) => {
-  const user = await userSchema.findById(req.user.id);
+  // console.log(req.user, req.token);
+  // const user = await userSchema.findById(req.user.id);
 
-  res.status(200).json({ success: true, user });
+  res.status(200).json({ success: true, user: req.user });
 });
 
 //update Password
