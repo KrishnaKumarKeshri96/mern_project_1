@@ -6,6 +6,8 @@ import {
   forgotPassword,
   resetPassword,
   getCurrentUser,
+  updatePasswordOfUser,
+  updateProfileOfUser,
 } from "../Controllers/UserController.js";
 import express from "express";
 import { isAuthenticated, AuthorizeRole } from "../middleware/auth.js";
@@ -19,6 +21,8 @@ router
   .get("/logout", logout)
   .post("/password/reset", forgotPassword)
   .put("/password/reset/:token", resetPassword)
-  .get("/me", isAuthenticated, getCurrentUser);
+  .get("/me", isAuthenticated, getCurrentUser)
+  .put("/password/update", isAuthenticated, updatePasswordOfUser)
+  .put("/me/update", isAuthenticated, updateProfileOfUser);
 
 export default router;

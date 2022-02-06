@@ -40,10 +40,14 @@ export class ApiFeatures {
   }
 
   pagingation(limit) {
-    const currentPage = Number(this.query.page) || 1;
+    console.log("limit:", limit);
+    const currentPage = Number(this.queryStr.page) || 1;
+    console.log("this.query:", this.queryStr.page);
+    console.log("currentPage:", currentPage);
 
     const skip = limit * (currentPage - 1);
-    this.query = this.query.limit(limit).skip(skip);
+    console.log("skip:", skip);
+    this.query = this.query.skip(skip).limit(limit);
     return this;
   }
 }

@@ -10,10 +10,12 @@ const getAllProducts = AsyncErrorHandler(async (req, res) => {
   const productCount = await productScema.countDocuments();
   const apiFeatures = new ApiFeatures(productScema, req.query)
     .search()
-    .filter()
     .pagingation(5);
+  let response = await apiFeatures.query;
 
-  res.status(200).json({ success: true, products: await apiFeatures.query });
+  // apiFeatures.pagingation(5);
+  // response = await apiFeatures.query;
+  res.status(200).json({ success: true, products: response });
 });
 
 //Post request --admin

@@ -132,3 +132,39 @@ export const getCurrentUser = AsyncErrorHandler(async (req, res, next) => {
 
   res.status(200).json({ success: true, user });
 });
+
+//update Password
+export const updatePasswordOfUser = AsyncErrorHandler(
+  async (req, res, next) => {
+    const user = await (
+      await userSchema.findById(req.user.id)
+    ).select("+password");
+
+    const matched = await user.comparePassword(req.body.oldPassword);
+    if (!matched) {
+      return next(new ErrorHandler("Old Password is incorrect"), 400);
+    }
+    if (req.body.newPassword !== req.body.confirmPassword)
+      return next(new ErrorHandler("Password Doesnot Matched"), 400);
+
+    user.password = req.body.confirmPassword;
+    await user.save();
+
+    saveToken(user, 200, res);
+  }
+);
+
+//update user Profile
+export const updateProfileOfUser = AsyncErrorHandler(async (req, res, next) => {
+  const newUserData = {
+    email: req.body.email,
+    name: req.body.name,
+  };
+  const user = await userSchema.findByIdAndUpdate(req.body.id, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  res.status(200).json({ success: true });
+});
