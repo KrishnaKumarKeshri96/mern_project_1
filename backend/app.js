@@ -12,8 +12,8 @@ process.on("uncaughtException", (err) => {
 
 dotenv.config({ path: "configs/config.env" });
 
-const server = app.listen(process.env.PORT, () => {
-  database();
+const server = app.listen(process.env.PORT, async () => {
+  await database();
   console.log(`listening on port ${process.env.PORT}`);
 });
 

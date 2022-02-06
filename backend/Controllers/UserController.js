@@ -42,11 +42,6 @@ export const loginUser = AsyncErrorHandler(async (req, res, next) => {
   saveToken(user, 200, res);
 });
 
-//Get all User
-export const getAllUsers = AsyncErrorHandler(async (req, res, next) => {
-  return res.status(200).json({ success: true, user: await userSchema.find() });
-});
-
 //Log Out USer User
 export const logout = AsyncErrorHandler(async (req, res, next) => {
   res.cookie("token", null, {
@@ -167,4 +162,54 @@ export const updateProfileOfUser = AsyncErrorHandler(async (req, res, next) => {
   });
 
   res.status(200).json({ success: true });
+});
+
+//Get all User (admin)
+export const getAllUsers = AsyncErrorHandler(async (req, res, next) => {
+  return res.status(200).json({ success: true, user: await userSchema.find() });
+});
+
+//Get Single User (admin)
+export const getSingleUser = AsyncErrorHandler(async (req, res, next) => {
+  const user = await userSchema.findById(req.params.id);
+  if (!user) return next(new ErrorHandler("User Doesn't exist", 400));
+  return res.status(200).json({ success: true, user });
+});
+
+//Update User Role --Admin
+
+export const updateRoleUpdate = AsyncErrorHandler(async (req, res, next) => {
+  const newUserData = {
+    email: req.body.email,
+    name: req.body.name,
+    role: req.body.role,
+  };
+  const user = await userSchema.findById(req.params.id);
+  if (!user) return next(new ErrorHandler("User Doesn't exist", 400));
+
+  await user.update(newUserData, {
+    new: true,
+    useFindAndModify: false,
+    runValidators: true,
+  });
+
+  res.status(200).json({ success: true });
+});
+
+// Delete User --Admin
+export const deleteUserOnlyAdmin = AsyncErrorHandler(async (req, res, next) => {
+  const user = await userSchema.findById(req.params.id);
+
+  if (!user) {
+    return next(
+      new ErrorHandler(`User does not exist with Id: ${req.params.id}`, 400)
+    );
+  }
+
+  await user.remove();
+
+  res.status(200).json({
+    success: true,
+    message: "User Deleted Successfully",
+  });
 });
