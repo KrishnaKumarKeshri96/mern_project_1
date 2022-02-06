@@ -180,5 +180,3 @@ export {
   getProductReviews,
   deleteReview,
 };
-
-// createProductReview();
