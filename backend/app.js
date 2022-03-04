@@ -2,6 +2,7 @@
 import express from "express";
 import productRoute from "./routes/productRoute.js";
 import userRoute from "./routes/userRoute.js";
+import orderRoute from "./routes/orderRoute.js";
 
 import errorMiddleware from "./middleware/error.js";
 import cookieparser from "cookie-parser";
@@ -18,6 +19,10 @@ app.use("/api/v1", productRoute);
 
 //user Router
 app.use("/api/v1", userRoute);
+
+//Order routes
+
+app.use("/api/v1", orderRoute);
 
 //middleWare for errors
 
