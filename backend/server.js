@@ -1,26 +1,28 @@
-// const express = require("express");
-import express from "express";
-import productRoute from "./routes/productRoute.js";
-import userRoute from "./routes/userRoute.js";
+import { app } from "./app.js";
+import dotenv from "dotenv";
+import { database } from "./configs/db.js";
 
-import errorMiddleware from "./middleware/error.js";
-import cookieparser from "cookie-parser";
+//Handling Uncaught exceptions
 
-const app = express();
+process.on("uncaughtException", (err) => {
+  console.log("Error:", err.message);
+  console.log("Shutting Down Server due  to uncaught exception");
+  process.exit(1);
+});
 
-app.use(express.json());
+dotenv.config({ path: "configs/config.env" });
 
-//Cookie Parser
-app.use(cookieparser());
+const server = app.listen(process.env.PORT, async () => {
+  await database();
+  console.log(`listening on port ${process.env.PORT}`);
+});
 
-//Products Router
-app.use("/api/v1", productRoute);
+//Unhandled Promise Rejection
 
-//user Router
-app.use("/api/v1", userRoute);
-
-//middleWare for errors
-
-app.use(errorMiddleware);
-
-export { app };
+process.on("unhandledRejection", (error) => {
+  console.log("Error:", error.message);
+  console.log("Shutting Down server due to unhandled Promise rejection");
+  server.close(() => {
+    process.exit(1);
+  });
+});
