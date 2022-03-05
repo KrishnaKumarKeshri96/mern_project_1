@@ -1,7 +1,12 @@
 import { CgMouse } from "react-icons/all";
 import "./Home.css";
+import ProductCard from "./ProductCard"
+
+
 
 const Home = () => {
+
+  const products = []
   return (
     <div className="banner">
       <p>Welcome to Ecommerce</p>
@@ -12,6 +17,14 @@ const Home = () => {
           Scroll <CgMouse />
         </button>
       </a>
+       <h2 className="homeHeading">Featured Products</h2>
+
+          <div className="container" id="container">
+            {products &&
+              products.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+          </div>
     </div>
   );
 };
