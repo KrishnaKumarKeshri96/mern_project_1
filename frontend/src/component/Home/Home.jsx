@@ -1,11 +1,17 @@
+import { useEffect } from "react";
+
 import { CgMouse } from "react-icons/all";
 import "./Home.css";
 import ProductCard from "./ProductCard";
 import Loader from "../layout/Loader/Loader";
 
+import { useAlert } from "react-alert";
+
 const Home = () => {
+  const alert = useAlert();
   const products = [];
   const loading = true;
+
   return (
     <>
       {loading ? (
