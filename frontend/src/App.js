@@ -8,6 +8,7 @@ import Home from "./component/Home/Home.jsx";
 import ProductDetails from "./component/Product/ProductDetails.js";
 import Search from "./component/Product/Search";
 import Products from "./component/Product/Products.js";
+import LoginSignUp from "./component/User/LoginSignUp";
 
 function App() {
   useEffect(() => {
@@ -25,6 +26,7 @@ function App() {
         <Route exact path="/product/:id" component={ProductDetails} />
         <Route exact path="/products" component={Products} />
         <Route exact path="/search" component={Search} />
+        <Route exact path="/login" component={LoginSignUp} />
         <Footer />
       </Router>
     </>
