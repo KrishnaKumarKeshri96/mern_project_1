@@ -1,6 +1,7 @@
 import { app } from "./app.js";
 import dotenv from "dotenv";
 import { database } from "./configs/db.js";
+import cloudinary from "cloudinary";
 
 //Handling Uncaught exceptions
 
@@ -11,6 +12,12 @@ process.on("uncaughtException", (err) => {
 });
 
 dotenv.config({ path: "configs/config.env" });
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const server = app.listen(process.env.PORT, async () => {
   await database();
