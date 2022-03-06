@@ -16,7 +16,12 @@ const getAllProducts = AsyncErrorHandler(async (req, res) => {
 
   // apiFeatures.pagingation(5);
   // response = await apiFeatures.query;
-  res.status(200).json({ success: true, products: response,productCount })
+  res.status(200).json({
+    success: true,
+    products: response,
+    productCount,
+    resultPerPage: 5,
+  });
 });
 
 //Post request --admin

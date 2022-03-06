@@ -7,6 +7,7 @@ import Footer from "./component/layout/Footer/Footer.js";
 import Home from "./component/Home/Home.jsx";
 import ProductDetails from "./component/Product/ProductDetails.js";
 import Search from "./component/Product/Search";
+import Products from "./component/Product/Products.js";
 
 function App() {
   useEffect(() => {
@@ -22,6 +23,7 @@ function App() {
         <Header />
         <Route exact path="/" component={Home} />
         <Route exact path="/product/:id" component={ProductDetails} />
+        <Route exact path="/products" component={Products} />
         <Route exact path="/search" component={Search} />
         <Footer />
       </Router>
