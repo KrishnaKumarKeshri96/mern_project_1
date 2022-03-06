@@ -19,8 +19,8 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const server = app.listen(process.env.PORT, async () => {
-  await database();
+const server = app.listen(process.env.PORT, () => {
+  database();
   console.log(`listening on port ${process.env.PORT}`);
 });
 
