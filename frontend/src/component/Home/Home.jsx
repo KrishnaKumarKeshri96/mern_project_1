@@ -10,7 +10,7 @@ import { useAlert } from "react-alert";
 const Home = () => {
   const alert = useAlert();
   const products = [];
-  const loading = true;
+  const loading = false;
 
   return (
     <>
