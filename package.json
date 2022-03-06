@@ -28,7 +28,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.5",
     "nodemailer": "^6.6.3",
-    "react-rating-stars-component": "^2.2.0",
     "validator": "^13.6.0"
   }
 }
