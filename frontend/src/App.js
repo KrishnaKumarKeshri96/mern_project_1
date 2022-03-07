@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Header from "./component/layout/Header/Header.js";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import WebFont from "webfontloader";
@@ -33,20 +33,23 @@ function App() {
       <Router>
         <Header />
         {isAuthenticated && <UserOptions user={user} />}
-        <Route exact path="/" component={Home} />
-        <Route exact path="/product/:id" component={ProductDetails} />
-        <Route exact path="/products" component={Products} />
-        <Route exact path="/search" component={Search} />
-        <Route exact path="/login" component={LoginSignUp} />
 
-        <ProtectedRoute exact path="/account" component={Profile} />
-        <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/product/:id" component={ProductDetails} />
+          <Route exact path="/products" component={Products} />
+          <Route exact path="/search" component={Search} />
+          <Route exact path="/login" component={LoginSignUp} />
 
-        <ProtectedRoute
-          exact
-          path="/password/update"
-          component={UpdatePassword}
-        />
+          <ProtectedRoute exact path="/account" component={Profile} />
+          <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
+
+          <ProtectedRoute
+            exact
+            path="/password/update"
+            component={UpdatePassword}
+          />
+        </Switch>
 
         <Footer />
       </Router>
