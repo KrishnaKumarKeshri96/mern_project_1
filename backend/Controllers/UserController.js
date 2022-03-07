@@ -9,12 +9,19 @@ import { sendEmail } from "../utils/sendEmail.js";
 
 import crypto from "crypto";
 
+import cloudinary from "cloudinary";
+
 //Register a User
 
 export const registration = AsyncErrorHandler(async (req, res, next) => {
+  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    folder: "avatars",
+    width: 150,
+    crop: "scale",
+  });
   const user = await userSchema.create({
     ...req.body,
-    avatar: { public_id: "test", url: "test" },
+    avatar: { public_id: myCloud.public_id, url: myCloud.secure_url },
   });
   saveToken(user, 201, res);
 });

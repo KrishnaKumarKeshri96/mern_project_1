@@ -4,6 +4,8 @@ import productRoute from "./routes/productRoute.js";
 import userRoute from "./routes/userRoute.js";
 import orderRoute from "./routes/orderRoute.js";
 
+import fileupload from "express-fileupload";
+
 import errorMiddleware from "./middleware/error.js";
 import cookieparser from "cookie-parser";
 
@@ -13,6 +15,10 @@ app.use(express.json());
 
 //Cookie Parser
 app.use(cookieparser());
+
+app.use(express.urlencoded({ extended: true }));
+
+app.use(fileupload());
 
 //Products Router
 app.use("/api/v1", productRoute);
