@@ -15,6 +15,7 @@ import store from "./store";
 import { loadUser } from "./actions/userAction";
 import Profile from "./component/User/Profile.js";
 import ProtectedRoute from "./component/Route/ProtectedRoute.js";
+import UpdateProfile from "./component/User/UpdateProfile.js";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   useEffect(() => {
@@ -37,6 +38,7 @@ function App() {
         <Route exact path="/login" component={LoginSignUp} />
 
         <ProtectedRoute exact path="/account" component={Profile} />
+        <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
 
         <Footer />
       </Router>
