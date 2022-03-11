@@ -29,6 +29,12 @@ import Shipping from "./component/Cart/Shipping.js";
 
 import ConfirmOrder from "./component/Cart/ConfirmOrder";
 
+import Payment from "./component/Cart/Payment";
+
+import { Elements } from "@stripe/react-stripe-js";
+
+import { loadStripe } from "@stripe/stripe-js";
+
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -56,6 +62,12 @@ function App() {
       <Router>
         <Header />
         {isAuthenticated && <UserOptions user={user} />}
+
+        {stripeApiKey && (
+          <Elements stripe={loadStripe(stripeApiKey)}>
+            <ProtectedRoute exact path="/process/payment" component={Payment} />
+          </Elements>
+        )}
 
         <Switch>
           <Route exact path="/" component={Home} />
