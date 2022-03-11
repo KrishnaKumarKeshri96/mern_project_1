@@ -1,8 +1,9 @@
 import "./App.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "./component/layout/Header/Header.js";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import WebFont from "webfontloader";
+import axios from "axios";
 import Footer from "./component/layout/Footer/Footer.js";
 import Home from "./component/Home/Home.jsx";
 import ProductDetails from "./component/Product/ProductDetails.js";
@@ -30,13 +31,24 @@ import ConfirmOrder from "./component/Cart/ConfirmOrder";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
+
+  const [stripeApiKey, setStripeApiKey] = useState("");
+  async function getStripeApiKey() {
+    const { data } = await axios.get("/api/v1/stripeapikey");
+
+    setStripeApiKey(data.stripeApiKey);
+  }
+
   useEffect(() => {
     WebFont.load({
       google: {
         families: ["Roboto", "Droid Sans", "Chilanka"],
       },
     });
+
     store.dispatch(loadUser());
+
+    getStripeApiKey();
   }, []);
   return (
     <>
