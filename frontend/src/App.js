@@ -50,6 +50,7 @@ function App() {
 
     getStripeApiKey();
   }, []);
+
   return (
     <>
       <Router>
