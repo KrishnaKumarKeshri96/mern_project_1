@@ -25,6 +25,9 @@ import UpdatePassword from "./component/User/UpdatePassword.js";
 import Cart from "./component/Cart/Cart.js";
 
 import Shipping from "./component/Cart/Shipping.js";
+
+import ConfirmOrder from "./component/Cart/ConfirmOrder";
+
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   useEffect(() => {
@@ -53,6 +56,12 @@ function App() {
           <ProtectedRoute exact path="/account" component={Profile} />
           <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
           <ProtectedRoute exact path="/shipping" component={Shipping} />
+
+          <ProtectedRoute
+            exact
+            path="/order/confirm"
+            component={ConfirmOrder}
+          />
 
           <ProtectedRoute
             exact
