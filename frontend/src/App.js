@@ -23,6 +23,8 @@ import ResetPassword from "./component/User/ResetPassword.js";
 import UpdatePassword from "./component/User/UpdatePassword.js";
 
 import Cart from "./component/Cart/Cart.js";
+
+import Shipping from "./component/Cart/Shipping.js";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   useEffect(() => {
@@ -50,6 +52,7 @@ function App() {
 
           <ProtectedRoute exact path="/account" component={Profile} />
           <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
+          <ProtectedRoute exact path="/shipping" component={Shipping} />
 
           <ProtectedRoute
             exact
