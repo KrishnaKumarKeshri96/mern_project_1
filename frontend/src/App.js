@@ -39,6 +39,7 @@ import OrderSuccess from "./component/Cart/OrderSuccess";
 
 import MyOrders from "./component/Order/MyOrders";
 
+import OrderDetails from "./component/Order/OrderDetails.js";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -108,6 +109,8 @@ function App() {
           />
 
           <ProtectedRoute exact path="/orders" component={MyOrders} />
+
+          <ProtectedRoute exact path="/order/:id" component={OrderDetails} />
         </Switch>
 
         <Footer />
