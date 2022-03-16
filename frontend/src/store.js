@@ -9,6 +9,7 @@ import {
   newReviewReducer,
   newProductReducer,
   productReducer,
+  productReviewsReducer,
 } from "./reducers/productReducer.js";
 import {
   profileReducer,
@@ -46,6 +47,7 @@ const reducer = combineReducers({
   newReview: newReviewReducer,
   newProduct: newProductReducer,
   product: productReducer,
+  productReviews: productReviewsReducer,
 });
 
 const middleware = [thunk];
