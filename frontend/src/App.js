@@ -42,6 +42,8 @@ import MyOrders from "./component/Order/MyOrders";
 import OrderDetails from "./component/Order/OrderDetails.js";
 
 import Dashboard from "./component/Admin/Dashboard.js";
+
+import NewProduct from "./component/Admin/NewProduct";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -114,6 +116,12 @@ function App() {
 
           <ProtectedRoute exact path="/order/:id" component={OrderDetails} />
           <ProtectedRoute exact path="/admin/dashboard" component={Dashboard} />
+          <ProtectedRoute
+            exact
+            path="/admin/product"
+            isAdmin={true}
+            component={NewProduct}
+          />
         </Switch>
 
         <Footer />
