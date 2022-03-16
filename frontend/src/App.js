@@ -47,6 +47,8 @@ import NewProduct from "./component/Admin/NewProduct";
 
 import ProductReviews from "./component/Admin/ProductReviews";
 
+import ProductList from "./component/Admin/ProductList.js";
+
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -131,6 +133,12 @@ function App() {
             path="/admin/reviews"
             isAdmin={true}
             component={ProductReviews}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin/products"
+            isAdmin={true}
+            component={ProductList}
           />
         </Switch>
 
