@@ -55,6 +55,8 @@ import ProcessOrder from "./component/Admin/ProcessOrder";
 
 import UsersList from "./component/Admin/UsersList";
 
+import UpdateUser from "./component/Admin/UpdateUser";
+
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -166,6 +168,13 @@ function App() {
             path="/admin/users"
             isAdmin={true}
             component={UsersList}
+          />
+
+          <ProtectedRoute
+            exact
+            path="/admin/user/:id"
+            isAdmin={true}
+            component={UpdateUser}
           />
         </Switch>
 
