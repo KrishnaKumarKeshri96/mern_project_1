@@ -1,22 +1,25 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-
-import { cartReducer } from "./reducers/cartReducer";
 import {
-  productsReducer,
-  productDetailsReducer,
-  newReviewReducer,
   newProductReducer,
+  newReviewReducer,
+  productDetailsReducer,
   productReducer,
   productReviewsReducer,
-} from "./reducers/productReducer.js";
+  productsReducer,
+  reviewReducer,
+} from "./reducers/productReducer";
+
 import {
-  profileReducer,
-  userReducer,
+  allUsersReducer,
   forgotPasswordReducer,
+  profileReducer,
+  userDetailsReducer,
+  userReducer,
 } from "./reducers/userReducer";
 
+import { cartReducer } from "./reducers/cartReducer";
 import {
   allOrdersReducer,
   myOrdersReducer,
@@ -24,6 +27,27 @@ import {
   orderDetailsReducer,
   orderReducer,
 } from "./reducers/orderReducer";
+
+const reducer = combineReducers({
+  products: productsReducer,
+  productDetails: productDetailsReducer,
+  user: userReducer,
+  profile: profileReducer,
+  forgotPassword: forgotPasswordReducer,
+  cart: cartReducer,
+  newOrder: newOrderReducer,
+  myOrders: myOrdersReducer,
+  orderDetails: orderDetailsReducer,
+  newReview: newReviewReducer,
+  newProduct: newProductReducer,
+  product: productReducer,
+  allOrders: allOrdersReducer,
+  order: orderReducer,
+  allUsers: allUsersReducer,
+  userDetails: userDetailsReducer,
+  productReviews: productReviewsReducer,
+  review: reviewReducer,
+});
 
 let initialState = {
   cart: {
@@ -35,24 +59,6 @@ let initialState = {
       : {},
   },
 };
-
-const reducer = combineReducers({
-  products: productsReducer,
-  productDetail: productDetailsReducer,
-  user: userReducer,
-  profile: profileReducer,
-  forgotPassword: forgotPasswordReducer,
-  cart: cartReducer,
-  newOrder: newOrderReducer,
-  myOrders: myOrdersReducer,
-  orderDetails: orderDetailsReducer,
-  newReview: newReviewReducer,
-  newProduct: newProductReducer,
-  product: productReducer,
-  productReviews: productReviewsReducer,
-  allOrders: allOrdersReducer,
-  order: orderReducer,
-});
 
 const middleware = [thunk];
 
