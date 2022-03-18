@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const {
   getAllProducts,
   createProduct,
@@ -9,8 +10,11 @@ const {
   getProductReviews,
   deleteReview,
   getAdminProducts,
-} = require("../controllers/productController");
-const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
+} = require(path.join(__dirname, "../controllers/productController"));
+const { isAuthenticatedUser, authorizeRoles } = require(path.join(
+  __dirname,
+  "../middleware/auth"
+));
 
 const router = express.Router();
 
