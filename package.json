@@ -1,5 +1,5 @@
 {
-  "name": "ecommerce",
+  "name": "mern_project_1",
   "version": "1.0.0",
   "description": "",
   "main": "backend/server.js",
@@ -7,11 +7,19 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node backend/server.js",
     "dev": "nodemon backend/server.js",
-     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false"
-  
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KrishnaKumarKeshri96/mern_project_1.git"
+  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KrishnaKumarKeshri96/mern_project_1/issues"
+  },
+  "homepage": "https://github.com/KrishnaKumarKeshri96/mern_project_1#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -27,6 +35,3 @@
     "validator": "^13.6.0"
   }
 }
-
-
-
