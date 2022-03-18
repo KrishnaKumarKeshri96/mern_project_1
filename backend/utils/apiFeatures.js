@@ -1,53 +1,49 @@
-//Constructor for Search Filter and pagination
-
-export class ApiFeatures {
+class ApiFeatures {
   constructor(query, queryStr) {
     this.query = query;
     this.queryStr = queryStr;
   }
 
   search() {
-    const keyword = this.queryStr.search;
+    const keyword = this.queryStr.keyword
+      ? {
+          name: {
+            $regex: this.queryStr.keyword,
+            $options: "i",
+          },
+        }
+      : {};
 
-    const name = {
-      $regex: keyword,
-      $options: "i",
-    };
-
-    keyword
-      ? (this.query = this.query.find({ name }))
-      : (this.query = this.query.find());
+    this.query = this.query.find({ ...keyword });
     return this;
   }
 
   filter() {
-    //Making Copy of All Query
-    const queryStrD = { ...this.queryStr };
-    //Deleting all fields mention in variabe keywords
-    const keywords = ["search", "page", "limit"];
-    keywords.forEach((keyword) => {
-      delete queryStrD[keyword];
-    });
+    const queryCopy = { ...this.queryStr };
+    //   Removing some fields for category
+    const removeFields = ["keyword", "page", "limit"];
 
-    //Filter for Price And Rating
+    removeFields.forEach((key) => delete queryCopy[key]);
 
-    let changingQueryStr = JSON.stringify(queryStrD);
-    changingQueryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
+    // Filter For Price and Rating
 
-    this.query = this.query.find(JSON.parse(changingQueryStr));
+    let queryStr = JSON.stringify(queryCopy);
+    queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
+
+    this.query = this.query.find(JSON.parse(queryStr));
 
     return this;
   }
 
-  pagingation(limit) {
-    console.log("limit:", limit);
+  pagination(resultPerPage) {
     const currentPage = Number(this.queryStr.page) || 1;
-    console.log("this.query:", this.queryStr.page);
-    console.log("currentPage:", currentPage);
 
-    const skip = limit * (currentPage - 1);
-    console.log("skip:", skip);
-    this.query = this.query.skip(skip).limit(limit);
+    const skip = resultPerPage * (currentPage - 1);
+
+    this.query = this.query.limit(resultPerPage).skip(skip);
+
     return this;
   }
 }
+
+module.exports = ApiFeatures;

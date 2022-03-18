@@ -1,31 +1,28 @@
-import { ErrorHandler } from "../utils/errorHandler.js";
+const ErrorHander = require("../utils/errorhander");
+const catchAsyncErrors = require("./catchAsyncErrors");
+const jwt = require("jsonwebtoken");
+const User = require("../models/userModel");
 
-import AsyncErrorHandler from "../utils/asyncError.js";
-
-import jwt from "jsonwebtoken";
-
-import userSchema from "../Models/userModels.js";
-
-export const isAuthenticated = AsyncErrorHandler(async (req, res, next) => {
+exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
   const { token } = req.cookies;
-  //   console.log("token:", token);
+
   if (!token) {
-    return next(
-      new ErrorHandler("Please Login Or sign up to access this resources", 401)
-    );
+    return next(new ErrorHander("Please Login to access this resource", 401));
   }
-  const decodedData = jwt.verify(token, process.env.JWT_TOKEN);
-  // console.log(decodedData);
-  req.user = await userSchema.findById(decodedData.id);
+
+  const decodedData = jwt.verify(token, process.env.JWT_SECRET);
+
+  req.user = await User.findById(decodedData.id);
+
   next();
 });
 
-export const AuthorizeRole = (...roles) => {
+exports.authorizeRoles = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
       return next(
-        new ErrorHandler(
-          `Role: ${req.user.role} is not allowed to access this resource `,
+        new ErrorHander(
+          `Role: ${req.user.role} is not allowed to access this resouce `,
           403
         )
       );

@@ -1,41 +1,40 @@
-// const express = require("express");
-import express from "express";
-import productRoute from "./routes/productRoute.js";
-import userRoute from "./routes/userRoute.js";
-import orderRoute from "./routes/orderRoute.js";
-
-import payment from "./routes/paymentRoute";
-
-import fileupload from "express-fileupload";
-
-import errorMiddleware from "./middleware/error.js";
-import cookieparser from "cookie-parser";
-
+const express = require("express");
 const app = express();
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const fileUpload = require("express-fileupload");
+const path = require("path");
+
+const errorMiddleware = require("./middleware/error");
+
+// Config
+if (process.env.NODE_ENV !== "PRODUCTION") {
+  require("dotenv").config({ path: "backend/config/config.env" });
+}
 
 app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileUpload());
 
-//Cookie Parser
-app.use(cookieparser());
+// Route Imports
+const product = require("./routes/productRoute");
+const user = require("./routes/userRoute");
+const order = require("./routes/orderRoute");
+const payment = require("./routes/paymentRoute");
 
-app.use(express.urlencoded({ extended: true }));
-
-app.use(fileupload());
-
-//Products Router
-app.use("/api/v1", productRoute);
-
-//user Router
-app.use("/api/v1", userRoute);
-
-//Order routes
-
-app.use("/api/v1", orderRoute);
-
+app.use("/api/v1", product);
+app.use("/api/v1", user);
+app.use("/api/v1", order);
 app.use("/api/v1", payment);
 
-//middleWare for errors
+app.use(express.static(path.join(__dirname, "../frontend/build")));
 
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
+});
+
+// Middleware for Errors
 app.use(errorMiddleware);
 
-export { app };
+module.exports = app;
