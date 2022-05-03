@@ -4,13 +4,6 @@ A Full-Stack Ecommerce application that uss React, Redux, MongoDB, Nodejs, Expre
 
 <hr>
 
-[![github-follow](https://img.shields.io/github/followers/KrishnaKumarKeshri96?label=Follow&logoColor=purple&style=social)](https://github.com/KrishnaKumarKeshri96)
-[![project-languages-used](https://img.shields.io/github/languages/count/KrishnaKumarKeshri96/mern_project_1)](https://github.com/KrishnaKumarKeshri96/mern_project_1)
-[![project-top-language](https://img.shields.io/github/languages/top/KrishnaKumarKeshri96/mern_project_1?color=blueviolet)](https://github.com/KrishnaKumarKeshri96/mern_project_1)
-
-[![node.js](https://img.shields.io/node/v/c?color=pink)](https://nodejs.org/en/)
-[![npm](https://img.shields.io/npm/v/npm?color=blue&logo=npm)](https://www.npmjs.com/package/inquirer)
-
 ## Table of Content
 
 - [ Project Links ](#Project-Links)
