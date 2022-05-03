@@ -18,14 +18,17 @@ const About = () => {
           <div>
             <Avatar
               style={{ width: "10vmax", height: "10vmax", margin: "2vmax 0" }}
-              src="https://res.cloudinary.com/tripleayt/image/upload/v1631555947/products/jpyibarlaxawvcvqjv5b.png"
+              src=""
               alt="Founder"
             />
             <Typography>Krishna</Typography>
             <Button onClick={visitInstagram} color="primary">
               Visit Instagram
             </Button>
-            <span>This is a sample wesbite made by Krishna.</span>
+            <span>
+              This is a sample wesbite made by @Krishna. Only with the purpose
+              to learn MERN Stack.
+            </span>
           </div>
           <div className="aboutSectionContainer2">
             <Typography component="h2">Our Brands</Typography>
